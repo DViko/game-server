@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package autentification;
+
+option go_package = "./;authentication";
+
+import "google/api/annotations.proto";
+
+service AutentificationService {
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/v1/authentication/login"
+      body: "*"
+    };
+  }
+}
+
+service VerificationService {
+  rpc Register (VerificationRequest) returns (VerificationResponse) {
+    option (google.api.http) = {
+      post: "/v1/authentication/check"
+      body: "*"
+    };
+  }
+}
+
+
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message VerificationRequest {
+  string token = 1;
+}
+
+message VerificationResponse {
+  bool valid = 1;
+}
