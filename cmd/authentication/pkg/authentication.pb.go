@@ -118,112 +118,18 @@ func (x *LoginResponse) GetToken() string {
 	return ""
 }
 
-type VerificationRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VerificationRequest) Reset() {
-	*x = VerificationRequest{}
-	mi := &file_authentication_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VerificationRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VerificationRequest) ProtoMessage() {}
-
-func (x *VerificationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_authentication_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VerificationRequest.ProtoReflect.Descriptor instead.
-func (*VerificationRequest) Descriptor() ([]byte, []int) {
-	return file_authentication_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *VerificationRequest) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
-}
-
-type VerificationResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Valid         bool                   `protobuf:"varint,1,opt,name=valid,proto3" json:"valid,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VerificationResponse) Reset() {
-	*x = VerificationResponse{}
-	mi := &file_authentication_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VerificationResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VerificationResponse) ProtoMessage() {}
-
-func (x *VerificationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_authentication_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VerificationResponse.ProtoReflect.Descriptor instead.
-func (*VerificationResponse) Descriptor() ([]byte, []int) {
-	return file_authentication_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *VerificationResponse) GetValid() bool {
-	if x != nil {
-		return x.Valid
-	}
-	return false
-}
-
 var File_authentication_proto protoreflect.FileDescriptor
 
 const file_authentication_proto_rawDesc = "" +
 	"\n" +
-	"\x14authentication.proto\x12\x0fautentification\x1a\x1cgoogle/api/annotations.proto\"F\n" +
+	"\x14authentication.proto\x12\x0eauthentication\x1a\x1cgoogle/api/annotations.proto\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"%\n" +
 	"\rLoginResponse\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"+\n" +
-	"\x13VerificationRequest\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\",\n" +
-	"\x14VerificationResponse\x12\x14\n" +
-	"\x05valid\x18\x01 \x01(\bR\x05valid2\x85\x01\n" +
-	"\x16AutentificationService\x12k\n" +
-	"\x05Login\x12\x1d.autentification.LoginRequest\x1a\x1e.autentification.LoginResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/authentication/login2\x93\x01\n" +
-	"\x13VerificationService\x12|\n" +
-	"\bRegister\x12$.autentification.VerificationRequest\x1a%.autentification.VerificationResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/authentication/checkB\x13Z\x11./;authenticationb\x06proto3"
+	"\x05token\x18\x01 \x01(\tR\x05token2\x83\x01\n" +
+	"\x16AutentificationService\x12i\n" +
+	"\x05Login\x12\x1c.authentication.LoginRequest\x1a\x1d.authentication.LoginResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/authentication/loginB\x16Z\x14./pkg;authenticationb\x06proto3"
 
 var (
 	file_authentication_proto_rawDescOnce sync.Once
@@ -237,20 +143,16 @@ func file_authentication_proto_rawDescGZIP() []byte {
 	return file_authentication_proto_rawDescData
 }
 
-var file_authentication_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_authentication_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_authentication_proto_goTypes = []any{
-	(*LoginRequest)(nil),         // 0: autentification.LoginRequest
-	(*LoginResponse)(nil),        // 1: autentification.LoginResponse
-	(*VerificationRequest)(nil),  // 2: autentification.VerificationRequest
-	(*VerificationResponse)(nil), // 3: autentification.VerificationResponse
+	(*LoginRequest)(nil),  // 0: authentication.LoginRequest
+	(*LoginResponse)(nil), // 1: authentication.LoginResponse
 }
 var file_authentication_proto_depIdxs = []int32{
-	0, // 0: autentification.AutentificationService.Login:input_type -> autentification.LoginRequest
-	2, // 1: autentification.VerificationService.Register:input_type -> autentification.VerificationRequest
-	1, // 2: autentification.AutentificationService.Login:output_type -> autentification.LoginResponse
-	3, // 3: autentification.VerificationService.Register:output_type -> autentification.VerificationResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 0: authentication.AutentificationService.Login:input_type -> authentication.LoginRequest
+	1, // 1: authentication.AutentificationService.Login:output_type -> authentication.LoginResponse
+	1, // [1:2] is the sub-list for method output_type
+	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -267,9 +169,9 @@ func file_authentication_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_authentication_proto_rawDesc), len(file_authentication_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   2,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   1,
 		},
 		GoTypes:           file_authentication_proto_goTypes,
 		DependencyIndexes: file_authentication_proto_depIdxs,

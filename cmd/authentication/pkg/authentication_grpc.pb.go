@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AutentificationService_Login_FullMethodName = "/autentification.AutentificationService/Login"
+	AutentificationService_Login_FullMethodName = "/authentication.AutentificationService/Login"
 )
 
 // AutentificationServiceClient is the client API for AutentificationService service.
@@ -109,114 +109,12 @@ func _AutentificationService_Login_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AutentificationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "autentification.AutentificationService",
+	ServiceName: "authentication.AutentificationService",
 	HandlerType: (*AutentificationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Login",
 			Handler:    _AutentificationService_Login_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "authentication.proto",
-}
-
-const (
-	VerificationService_Register_FullMethodName = "/autentification.VerificationService/Register"
-)
-
-// VerificationServiceClient is the client API for VerificationService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type VerificationServiceClient interface {
-	Register(ctx context.Context, in *VerificationRequest, opts ...grpc.CallOption) (*VerificationResponse, error)
-}
-
-type verificationServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewVerificationServiceClient(cc grpc.ClientConnInterface) VerificationServiceClient {
-	return &verificationServiceClient{cc}
-}
-
-func (c *verificationServiceClient) Register(ctx context.Context, in *VerificationRequest, opts ...grpc.CallOption) (*VerificationResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerificationResponse)
-	err := c.cc.Invoke(ctx, VerificationService_Register_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// VerificationServiceServer is the server API for VerificationService service.
-// All implementations must embed UnimplementedVerificationServiceServer
-// for forward compatibility.
-type VerificationServiceServer interface {
-	Register(context.Context, *VerificationRequest) (*VerificationResponse, error)
-	mustEmbedUnimplementedVerificationServiceServer()
-}
-
-// UnimplementedVerificationServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedVerificationServiceServer struct{}
-
-func (UnimplementedVerificationServiceServer) Register(context.Context, *VerificationRequest) (*VerificationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
-}
-func (UnimplementedVerificationServiceServer) mustEmbedUnimplementedVerificationServiceServer() {}
-func (UnimplementedVerificationServiceServer) testEmbeddedByValue()                             {}
-
-// UnsafeVerificationServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to VerificationServiceServer will
-// result in compilation errors.
-type UnsafeVerificationServiceServer interface {
-	mustEmbedUnimplementedVerificationServiceServer()
-}
-
-func RegisterVerificationServiceServer(s grpc.ServiceRegistrar, srv VerificationServiceServer) {
-	// If the following call pancis, it indicates UnimplementedVerificationServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&VerificationService_ServiceDesc, srv)
-}
-
-func _VerificationService_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerificationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VerificationServiceServer).Register(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: VerificationService_Register_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VerificationServiceServer).Register(ctx, req.(*VerificationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// VerificationService_ServiceDesc is the grpc.ServiceDesc for VerificationService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var VerificationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "autentification.VerificationService",
-	HandlerType: (*VerificationServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Register",
-			Handler:    _VerificationService_Register_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
