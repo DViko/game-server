@@ -21,7 +21,7 @@ func (d *DataBase) ConnectDB() *pgx.Conn {
 	defer conn.Close(context.Background())
 
 	var username string
-	err = conn.QueryRow(context.Background(), "SELECT username FROM users WHERE email = 'jane@gmail.com'"git).Scan(&username)
+	err = conn.QueryRow(context.Background(), "SELECT username FROM users WHERE email = 'jane@gmail.com'").Scan(&username)
 	if err != nil {
 		log.Fatalf("Query failed: %v\n", err)
 	}
