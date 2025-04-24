@@ -2,30 +2,36 @@ package data_base
 
 import (
 	"context"
-	"fmt"
-	"log"
 
-	"github.com/jackc/pgx/v5"
+	"authentication/helpers"
+	pd "authentication/pkg"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type DataBase struct {
+	DBPool *pgxpool.Pool
 }
 
-func (d *DataBase) ConnectDB() *pgx.Conn {
-	conn, err := pgx.Connect(context.Background(), "postgres://postgres:root@localhost:5432/authentication")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("connected")
+func NewDB(ctx context.Context, cntStr string) *DataBase {
 
-	defer conn.Close(context.Background())
+	conn, err := pgxpool.New(context.Background(), cntStr)
+
+	helpers.ErrorHelper(err, "Failed to connect to database:")
+
+	return &DataBase{DBPool: conn}
+}
+
+func (db *DataBase) ConnectClose() {
+
+	db.DBPool.Close()
+}
+
+func (db *DataBase) Registration(ctx context.Context, req *pd.RegistrationRequest) string {
 
 	var username string
-	err = conn.QueryRow(context.Background(), "SELECT username FROM users WHERE email = 'jane@gmail.com'").Scan(&username)
-	if err != nil {
-		log.Fatalf("Query failed: %v\n", err)
-	}
 
-	fmt.Println("User:", username)
-	return conn
+	db.DBPool.QueryRow(ctx, "SELECT username FROM users WHERE email = $1", req.Username).Scan(&username)
+
+	return username
 }

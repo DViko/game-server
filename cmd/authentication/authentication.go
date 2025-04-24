@@ -6,7 +6,9 @@ import (
 	"net"
 
 	"authentication/handler"
+	"authentication/helpers"
 	pd "authentication/pkg"
+	"context"
 
 	"google.golang.org/grpc"
 
@@ -16,16 +18,15 @@ import (
 func main() {
 	server := grpc.NewServer()
 
-	pd.RegisterAutentificationServiceServer(server, &handler.Authentication{})
+	db := data_base.NewDB(context.Background(), "postgres://postgres:root@localhost:5432/authentication")
+	authService := handler.NewAuthenticationService(db)
+
+	pd.RegisterRegistrationServiceServer(server, authService)
 	lis, err := net.Listen("tcp", "localhost:50051")
 
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	fmt.Println("server listening at", lis.Addr())
+	helpers.ErrorHelper(err, "failed to listen:")
 
-	d := data_base.DataBase{}
-	d.ConnectDB()
+	fmt.Println("server listening at", lis.Addr())
 
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

@@ -28,7 +28,7 @@ func main() {
 	mux := runtime.NewServeMux()
 
 	// Регистрируем gRPC Gateway хендлер
-	err := pb.RegisterAutentificationServiceHandlerFromEndpoint(ctx, mux, "localhost:50051", dialOpts)
+	err := pb.RegisterRegistrationServiceHandlerFromEndpoint(ctx, mux, "localhost:50051", dialOpts)
 	if err != nil {
 		log.Fatalf("failed to register handler: %v", err)
 	}
