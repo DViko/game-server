@@ -2,16 +2,18 @@ package jwt
 
 import (
 	"authentication/helpers"
-	"github.com/golang-jwt/jwt/v5"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 var key = []byte("the_game_aythentication")
 
-func GenerateToken(username string) string {
+func GenerateToken(uData []string) string {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": username,
+		"userId":   uData[0],
+		"username": uData[1],
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		"iat":      time.Now().Unix(),
 	})
