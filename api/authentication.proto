@@ -7,21 +7,32 @@ option go_package = "./pkg;authentication";
 import "google/api/annotations.proto";
 
 service RegistrationService {
-  rpc Registration (RegistrationRequest) returns (RegistrationResponse) {
+  rpc Registration (AuthenticationRequest) returns (AuthenticationResponse) {
     option (google.api.http) = {
-      post: "/v1/registration/login"
+      post: "/v1/authentication/registration"
       body: "*"
     };
   }
 }
 
-message RegistrationRequest {
-  string username = 1;
-  string password = 2;
+service SigningInService {
+  rpc SigningIn (AuthenticationRequest) returns (AuthenticationResponse) {
+    option (google.api.http) = {
+      post: "/v1/authentication/login"
+      body: "*"
+    };
+  }
 }
 
-message RegistrationResponse {
-  string username = 1;
-  string token = 2;
-  int32 error = 3;
+message AuthenticationRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message AuthenticationResponse {
+  string userId = 1;
+  string username = 2;
+  string token = 3;
+  int32 error = 4;
 }

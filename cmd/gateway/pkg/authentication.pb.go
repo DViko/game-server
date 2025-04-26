@@ -22,28 +22,29 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type RegistrationRequest struct {
+type AuthenticationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegistrationRequest) Reset() {
-	*x = RegistrationRequest{}
+func (x *AuthenticationRequest) Reset() {
+	*x = AuthenticationRequest{}
 	mi := &file_authentication_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegistrationRequest) String() string {
+func (x *AuthenticationRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegistrationRequest) ProtoMessage() {}
+func (*AuthenticationRequest) ProtoMessage() {}
 
-func (x *RegistrationRequest) ProtoReflect() protoreflect.Message {
+func (x *AuthenticationRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_authentication_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,48 +56,56 @@ func (x *RegistrationRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegistrationRequest.ProtoReflect.Descriptor instead.
-func (*RegistrationRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use AuthenticationRequest.ProtoReflect.Descriptor instead.
+func (*AuthenticationRequest) Descriptor() ([]byte, []int) {
 	return file_authentication_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RegistrationRequest) GetUsername() string {
+func (x *AuthenticationRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *AuthenticationRequest) GetUsername() string {
 	if x != nil {
 		return x.Username
 	}
 	return ""
 }
 
-func (x *RegistrationRequest) GetPassword() string {
+func (x *AuthenticationRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
 	}
 	return ""
 }
 
-type RegistrationResponse struct {
+type AuthenticationResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
-	Error         int32                  `protobuf:"varint,3,opt,name=error,proto3" json:"error,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Token         string                 `protobuf:"bytes,3,opt,name=token,proto3" json:"token,omitempty"`
+	Error         int32                  `protobuf:"varint,4,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegistrationResponse) Reset() {
-	*x = RegistrationResponse{}
+func (x *AuthenticationResponse) Reset() {
+	*x = AuthenticationResponse{}
 	mi := &file_authentication_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegistrationResponse) String() string {
+func (x *AuthenticationResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegistrationResponse) ProtoMessage() {}
+func (*AuthenticationResponse) ProtoMessage() {}
 
-func (x *RegistrationResponse) ProtoReflect() protoreflect.Message {
+func (x *AuthenticationResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_authentication_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -108,26 +117,33 @@ func (x *RegistrationResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegistrationResponse.ProtoReflect.Descriptor instead.
-func (*RegistrationResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use AuthenticationResponse.ProtoReflect.Descriptor instead.
+func (*AuthenticationResponse) Descriptor() ([]byte, []int) {
 	return file_authentication_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *RegistrationResponse) GetUsername() string {
+func (x *AuthenticationResponse) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AuthenticationResponse) GetUsername() string {
 	if x != nil {
 		return x.Username
 	}
 	return ""
 }
 
-func (x *RegistrationResponse) GetToken() string {
+func (x *AuthenticationResponse) GetToken() string {
 	if x != nil {
 		return x.Token
 	}
 	return ""
 }
 
-func (x *RegistrationResponse) GetError() int32 {
+func (x *AuthenticationResponse) GetError() int32 {
 	if x != nil {
 		return x.Error
 	}
@@ -138,16 +154,20 @@ var File_authentication_proto protoreflect.FileDescriptor
 
 const file_authentication_proto_rawDesc = "" +
 	"\n" +
-	"\x14authentication.proto\x12\x0eauthentication\x1a\x1cgoogle/api/annotations.proto\"M\n" +
-	"\x13RegistrationRequest\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"^\n" +
-	"\x14RegistrationResponse\x12\x1a\n" +
-	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token\x12\x14\n" +
-	"\x05error\x18\x03 \x01(\x05R\x05error2\x93\x01\n" +
-	"\x13RegistrationService\x12|\n" +
-	"\fRegistration\x12#.authentication.RegistrationRequest\x1a$.authentication.RegistrationResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/registration/loginB\x16Z\x14./pkg;authenticationb\x06proto3"
+	"\x14authentication.proto\x12\x0eauthentication\x1a\x1cgoogle/api/annotations.proto\"e\n" +
+	"\x15AuthenticationRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\"x\n" +
+	"\x16AuthenticationResponse\x12\x16\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
+	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
+	"\x05token\x18\x03 \x01(\tR\x05token\x12\x14\n" +
+	"\x05error\x18\x04 \x01(\x05R\x05error2\xa1\x01\n" +
+	"\x13RegistrationService\x12\x89\x01\n" +
+	"\fRegistration\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/authentication/registration2\x93\x01\n" +
+	"\x10SigningInService\x12\x7f\n" +
+	"\tSigningIn\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/authentication/loginB\x16Z\x14./pkg;authenticationb\x06proto3"
 
 var (
 	file_authentication_proto_rawDescOnce sync.Once
@@ -163,14 +183,16 @@ func file_authentication_proto_rawDescGZIP() []byte {
 
 var file_authentication_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_authentication_proto_goTypes = []any{
-	(*RegistrationRequest)(nil),  // 0: authentication.RegistrationRequest
-	(*RegistrationResponse)(nil), // 1: authentication.RegistrationResponse
+	(*AuthenticationRequest)(nil),  // 0: authentication.AuthenticationRequest
+	(*AuthenticationResponse)(nil), // 1: authentication.AuthenticationResponse
 }
 var file_authentication_proto_depIdxs = []int32{
-	0, // 0: authentication.RegistrationService.Registration:input_type -> authentication.RegistrationRequest
-	1, // 1: authentication.RegistrationService.Registration:output_type -> authentication.RegistrationResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // 0: authentication.RegistrationService.Registration:input_type -> authentication.AuthenticationRequest
+	0, // 1: authentication.SigningInService.SigningIn:input_type -> authentication.AuthenticationRequest
+	1, // 2: authentication.RegistrationService.Registration:output_type -> authentication.AuthenticationResponse
+	1, // 3: authentication.SigningInService.SigningIn:output_type -> authentication.AuthenticationResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -189,7 +211,7 @@ func file_authentication_proto_init() {
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_authentication_proto_goTypes,
 		DependencyIndexes: file_authentication_proto_depIdxs,
