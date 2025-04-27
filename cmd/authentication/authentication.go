@@ -11,17 +11,25 @@ import (
 	"context"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 
 	"authentication/data_base"
 )
 
+const (
+	sCrt = "certificate/server.crt"
+	sKey = "certificate/server.key"
+)
+
 func main() {
-	server := grpc.NewServer()
 
 	db := data_base.NewDB(context.Background(), "postgres://postgres:root@localhost:5432/authentication")
 	authService := handler.NewAuthenticationService(db)
 
-	pd.RegisterRegistrationServiceServer(server, authService)
+	creds, _ := credentials.NewServerTLSFromFile(sCrt, sKey)
+	server := grpc.NewServer(grpc.Creds(creds))
+
+	pd.RegisterAuthenticationServiceServer(server, authService)
 	lis, err := net.Listen("tcp", "localhost:50051")
 
 	helpers.ErrorHelper(err, "failed to listen:")

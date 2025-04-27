@@ -163,11 +163,10 @@ const file_authentication_proto_rawDesc = "" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05token\x18\x03 \x01(\tR\x05token\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\x05R\x05error2\xa1\x01\n" +
-	"\x13RegistrationService\x12\x89\x01\n" +
-	"\fRegistration\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/authentication/registration2\x93\x01\n" +
-	"\x10SigningInService\x12\x7f\n" +
-	"\tSigningIn\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/authentication/loginB\x16Z\x14./pkg;authenticationb\x06proto3"
+	"\x05error\x18\x04 \x01(\x05R\x05error2\x95\x02\n" +
+	"\x15AuthenticationService\x12}\n" +
+	"\x06SignUp\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/signup\x12}\n" +
+	"\x06SignIn\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/signinB\x16Z\x14./pkg;authenticationb\x06proto3"
 
 var (
 	file_authentication_proto_rawDescOnce sync.Once
@@ -187,10 +186,10 @@ var file_authentication_proto_goTypes = []any{
 	(*AuthenticationResponse)(nil), // 1: authentication.AuthenticationResponse
 }
 var file_authentication_proto_depIdxs = []int32{
-	0, // 0: authentication.RegistrationService.Registration:input_type -> authentication.AuthenticationRequest
-	0, // 1: authentication.SigningInService.SigningIn:input_type -> authentication.AuthenticationRequest
-	1, // 2: authentication.RegistrationService.Registration:output_type -> authentication.AuthenticationResponse
-	1, // 3: authentication.SigningInService.SigningIn:output_type -> authentication.AuthenticationResponse
+	0, // 0: authentication.AuthenticationService.SignUp:input_type -> authentication.AuthenticationRequest
+	0, // 1: authentication.AuthenticationService.SignIn:input_type -> authentication.AuthenticationRequest
+	1, // 2: authentication.AuthenticationService.SignUp:output_type -> authentication.AuthenticationResponse
+	1, // 3: authentication.AuthenticationService.SignIn:output_type -> authentication.AuthenticationResponse
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -211,7 +210,7 @@ func file_authentication_proto_init() {
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   1,
 		},
 		GoTypes:           file_authentication_proto_goTypes,
 		DependencyIndexes: file_authentication_proto_depIdxs,

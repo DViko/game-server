@@ -2,6 +2,7 @@ package data_base
 
 import (
 	"context"
+	"log"
 
 	"authentication/helpers"
 	pd "authentication/pkg"
@@ -27,25 +28,34 @@ func (db *DataBase) ConnectClose() {
 	db.DBPool.Close()
 }
 
-func (db *DataBase) Registration(ctx context.Context, req *pd.AuthenticationRequest) []string {
+func (db *DataBase) Registration(ctx context.Context, req *pd.AuthenticationRequest) *pd.AuthenticationResponse {
 
-	var insertId string
+	var uData pd.AuthenticationResponse
 
 	err := db.DBPool.QueryRow(
 		ctx,
 		"INSERT INTO users(email, username, password_hash) VALUES ($1, $2, $3) RETURNING id",
-		req.Email, req.Username, req.Password).Scan(&insertId)
+		req.Email, req.Username, req.Password).Scan(&uData.UserId)
 
 	helpers.ErrorHelper(err, "Failed to register user:")
 
-	return []string{insertId, req.Username}
+	return &uData
 }
 
-func (db *DataBase) SigningIn(ctx context.Context, req *pd.AuthenticationRequest) string {
+func (db *DataBase) SigningIn(ctx context.Context, req *pd.AuthenticationRequest) *pd.AuthenticationResponse {
+	log.Println("SigningIn", req.Email, req.Password)
 
-	var username string
+	var uData pd.AuthenticationResponse
 
-	db.DBPool.QueryRow(ctx, "SELECT username FROM users WHERE email = $1", req.Email).Scan(&username)
-
-	return username
+	err := db.DBPool.QueryRow(
+		ctx,
+		"SELECT id, username FROM users WHERE email = $1 AND password_hash = $2",
+		req.Email, req.Password).Scan(
+		&uData.UserId,
+		&uData.Username,
+	)
+	if err != nil {
+		helpers.ErrorHelper(err, "Failed to sign in user:")
+	}
+	return &uData
 }

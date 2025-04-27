@@ -35,7 +35,7 @@ var (
 	_ = metadata.Join
 )
 
-func request_RegistrationService_Registration_0(ctx context.Context, marshaler runtime.Marshaler, client RegistrationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_AuthenticationService_SignUp_0(ctx context.Context, marshaler runtime.Marshaler, client AuthenticationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq AuthenticationRequest
 		metadata runtime.ServerMetadata
@@ -43,11 +43,11 @@ func request_RegistrationService_Registration_0(ctx context.Context, marshaler r
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := client.Registration(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SignUp(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_RegistrationService_Registration_0(ctx context.Context, marshaler runtime.Marshaler, server RegistrationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_AuthenticationService_SignUp_0(ctx context.Context, marshaler runtime.Marshaler, server AuthenticationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq AuthenticationRequest
 		metadata runtime.ServerMetadata
@@ -55,11 +55,11 @@ func local_request_RegistrationService_Registration_0(ctx context.Context, marsh
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := server.Registration(ctx, &protoReq)
+	msg, err := server.SignUp(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-func request_SigningInService_SigningIn_0(ctx context.Context, marshaler runtime.Marshaler, client SigningInServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_AuthenticationService_SignIn_0(ctx context.Context, marshaler runtime.Marshaler, client AuthenticationServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq AuthenticationRequest
 		metadata runtime.ServerMetadata
@@ -67,11 +67,11 @@ func request_SigningInService_SigningIn_0(ctx context.Context, marshaler runtime
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := client.SigningIn(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SignIn(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_SigningInService_SigningIn_0(ctx context.Context, marshaler runtime.Marshaler, server SigningInServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_AuthenticationService_SignIn_0(ctx context.Context, marshaler runtime.Marshaler, server AuthenticationServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq AuthenticationRequest
 		metadata runtime.ServerMetadata
@@ -79,73 +79,63 @@ func local_request_SigningInService_SigningIn_0(ctx context.Context, marshaler r
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := server.SigningIn(ctx, &protoReq)
+	msg, err := server.SignIn(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-// RegisterRegistrationServiceHandlerServer registers the http handlers for service RegistrationService to "mux".
-// UnaryRPC     :call RegistrationServiceServer directly.
+// RegisterAuthenticationServiceHandlerServer registers the http handlers for service AuthenticationService to "mux".
+// UnaryRPC     :call AuthenticationServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRegistrationServiceHandlerFromEndpoint instead.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterAuthenticationServiceHandlerFromEndpoint instead.
 // GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterRegistrationServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RegistrationServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_RegistrationService_Registration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+func RegisterAuthenticationServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AuthenticationServiceServer) error {
+	mux.Handle(http.MethodPost, pattern_AuthenticationService_SignUp_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/authentication.RegistrationService/Registration", runtime.WithHTTPPathPattern("/v1/authentication/registration"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/authentication.AuthenticationService/SignUp", runtime.WithHTTPPathPattern("/v1/authentication/signup"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegistrationService_Registration_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_AuthenticationService_SignUp_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_RegistrationService_Registration_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthenticationService_SignUp_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-
-	return nil
-}
-
-// RegisterSigningInServiceHandlerServer registers the http handlers for service SigningInService to "mux".
-// UnaryRPC     :call SigningInServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterSigningInServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterSigningInServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SigningInServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_SigningInService_SigningIn_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_AuthenticationService_SignIn_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/authentication.SigningInService/SigningIn", runtime.WithHTTPPathPattern("/v1/authentication/login"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/authentication.AuthenticationService/SignIn", runtime.WithHTTPPathPattern("/v1/authentication/signin"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SigningInService_SigningIn_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_AuthenticationService_SignIn_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_SigningInService_SigningIn_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthenticationService_SignIn_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
 }
 
-// RegisterRegistrationServiceHandlerFromEndpoint is same as RegisterRegistrationServiceHandler but
+// RegisterAuthenticationServiceHandlerFromEndpoint is same as RegisterAuthenticationServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterRegistrationServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterAuthenticationServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		return err
@@ -164,109 +154,64 @@ func RegisterRegistrationServiceHandlerFromEndpoint(ctx context.Context, mux *ru
 			}
 		}()
 	}()
-	return RegisterRegistrationServiceHandler(ctx, mux, conn)
+	return RegisterAuthenticationServiceHandler(ctx, mux, conn)
 }
 
-// RegisterRegistrationServiceHandler registers the http handlers for service RegistrationService to "mux".
+// RegisterAuthenticationServiceHandler registers the http handlers for service AuthenticationService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterRegistrationServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterRegistrationServiceHandlerClient(ctx, mux, NewRegistrationServiceClient(conn))
+func RegisterAuthenticationServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterAuthenticationServiceHandlerClient(ctx, mux, NewAuthenticationServiceClient(conn))
 }
 
-// RegisterRegistrationServiceHandlerClient registers the http handlers for service RegistrationService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RegistrationServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RegistrationServiceClient"
+// RegisterAuthenticationServiceHandlerClient registers the http handlers for service AuthenticationService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AuthenticationServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AuthenticationServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "RegistrationServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterRegistrationServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RegistrationServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_RegistrationService_Registration_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+// "AuthenticationServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
+func RegisterAuthenticationServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AuthenticationServiceClient) error {
+	mux.Handle(http.MethodPost, pattern_AuthenticationService_SignUp_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/authentication.RegistrationService/Registration", runtime.WithHTTPPathPattern("/v1/authentication/registration"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/authentication.AuthenticationService/SignUp", runtime.WithHTTPPathPattern("/v1/authentication/signup"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegistrationService_Registration_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_AuthenticationService_SignUp_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_RegistrationService_Registration_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthenticationService_SignUp_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	return nil
-}
-
-var (
-	pattern_RegistrationService_Registration_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "authentication", "registration"}, ""))
-)
-
-var (
-	forward_RegistrationService_Registration_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterSigningInServiceHandlerFromEndpoint is same as RegisterSigningInServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterSigningInServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterSigningInServiceHandler(ctx, mux, conn)
-}
-
-// RegisterSigningInServiceHandler registers the http handlers for service SigningInService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterSigningInServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterSigningInServiceHandlerClient(ctx, mux, NewSigningInServiceClient(conn))
-}
-
-// RegisterSigningInServiceHandlerClient registers the http handlers for service SigningInService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SigningInServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SigningInServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "SigningInServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterSigningInServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client SigningInServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_SigningInService_SigningIn_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPost, pattern_AuthenticationService_SignIn_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/authentication.SigningInService/SigningIn", runtime.WithHTTPPathPattern("/v1/authentication/login"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/authentication.AuthenticationService/SignIn", runtime.WithHTTPPathPattern("/v1/authentication/signin"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SigningInService_SigningIn_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_AuthenticationService_SignIn_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_SigningInService_SigningIn_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthenticationService_SignIn_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	return nil
 }
 
 var (
-	pattern_SigningInService_SigningIn_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "authentication", "login"}, ""))
+	pattern_AuthenticationService_SignUp_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "authentication", "signup"}, ""))
+	pattern_AuthenticationService_SignIn_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "authentication", "signin"}, ""))
 )
 
 var (
-	forward_SigningInService_SigningIn_0 = runtime.ForwardResponseMessage
+	forward_AuthenticationService_SignUp_0 = runtime.ForwardResponseMessage
+	forward_AuthenticationService_SignIn_0 = runtime.ForwardResponseMessage
 )

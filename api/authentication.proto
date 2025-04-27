@@ -6,19 +6,17 @@ option go_package = "./pkg;authentication";
 
 import "google/api/annotations.proto";
 
-service RegistrationService {
-  rpc Registration (AuthenticationRequest) returns (AuthenticationResponse) {
+service AuthenticationService {
+  rpc SignUp (AuthenticationRequest) returns (AuthenticationResponse) {
     option (google.api.http) = {
-      post: "/v1/authentication/registration"
+      post: "/v1/authentication/signup"
       body: "*"
     };
   }
-}
 
-service SigningInService {
-  rpc SigningIn (AuthenticationRequest) returns (AuthenticationResponse) {
+  rpc SignIn (AuthenticationRequest) returns (AuthenticationResponse) {
     option (google.api.http) = {
-      post: "/v1/authentication/login"
+      post: "/v1/authentication/signin"
       body: "*"
     };
   }
