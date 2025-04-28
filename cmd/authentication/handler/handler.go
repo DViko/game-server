@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"log"
 
 	db "authentication/data_base"
 	jwt "authentication/jwt"
@@ -25,20 +24,19 @@ func (s *Authentication) SignUp(ctx context.Context, req *pd.AuthenticationReque
 	return &pd.AuthenticationResponse{
 		UserId:   uData.UserId,
 		Username: req.Username,
-		Token:    jwt.GenerateToken(uData.UserId),
+		Token:    jwt.GenerateToken(uData.UserId, uData.Username),
 		Error:    0,
 	}, nil
 }
 
 func (s *Authentication) SignIn(ctx context.Context, req *pd.AuthenticationRequest) (*pd.AuthenticationResponse, error) {
-	log.Println("result")
-	result := s.DB.SigningIn(ctx, req)
-	log.Println("result", result)
+
+	uData := s.DB.SigningIn(ctx, req)
 
 	return &pd.AuthenticationResponse{
-		UserId:   result.UserId,
-		Username: result.Username,
-		Token:    jwt.GenerateToken(result.UserId),
+		UserId:   uData.UserId,
+		Username: uData.Username,
+		Token:    jwt.GenerateToken(uData.UserId, uData.Username),
 		Error:    0,
 	}, nil
 }

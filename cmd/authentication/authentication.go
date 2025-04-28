@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net"
 
 	"authentication/handler"
@@ -34,9 +32,7 @@ func main() {
 
 	helpers.ErrorHelper(err, "failed to listen:")
 
-	fmt.Println("server listening at", lis.Addr())
-
 	if err := server.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		helpers.ErrorHelper(err, "failed to serve:")
 	}
 }

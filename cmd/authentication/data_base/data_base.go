@@ -2,7 +2,6 @@ package data_base
 
 import (
 	"context"
-	"log"
 
 	"authentication/helpers"
 	pd "authentication/pkg"
@@ -43,7 +42,6 @@ func (db *DataBase) Registration(ctx context.Context, req *pd.AuthenticationRequ
 }
 
 func (db *DataBase) SigningIn(ctx context.Context, req *pd.AuthenticationRequest) *pd.AuthenticationResponse {
-	log.Println("SigningIn", req.Email, req.Password)
 
 	var uData pd.AuthenticationResponse
 

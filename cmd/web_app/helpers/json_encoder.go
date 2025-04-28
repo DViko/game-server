@@ -1,8 +1,8 @@
 package helpers
 
 import (
+	"bytes"
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -13,24 +13,18 @@ type RegisterUserResponse struct {
 	Error    int32  `json:"error"`
 }
 
-func JsonEncoder(data map[string]string) []byte {
+func JsonEncoder(data map[string]string) *bytes.Buffer {
 
-	jData, err := json.Marshal(data)
-	if err != nil {
-		log.Fatal("Json error", err)
-	}
+	jData, _ := json.Marshal(data)
 
-	return jData
+	return bytes.NewBuffer(jData)
 }
 
 func JsonDecoder(data *http.Response) RegisterUserResponse {
 
 	var result RegisterUserResponse
 
-	err := json.NewDecoder(data.Body).Decode(&result)
-	if err != nil {
-		log.Fatal("Json error", err)
-	}
+	json.NewDecoder(data.Body).Decode(&result)
 
 	return result
 }

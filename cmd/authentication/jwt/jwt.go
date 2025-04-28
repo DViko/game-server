@@ -9,12 +9,13 @@ import (
 
 var key = []byte("the_game_aythentication")
 
-func GenerateToken(uId string) string {
+func GenerateToken(uId string, uName string) string {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"userId": uId,
-		"exp":    time.Now().Add(time.Hour * 24).Unix(),
-		"iat":    time.Now().Unix(),
+		"userId":   uId,
+		"username": uName,
+		"exp":      time.Now().Add(time.Hour * 24).Unix(),
+		"iat":      time.Now().Unix(),
 	})
 
 	tokenString, err := token.SignedString(key)
