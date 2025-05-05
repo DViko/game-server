@@ -7,3 +7,5 @@ GRoutes:
     url: "https://localhost:8080/v1/authentication/signup"
   - name: "signin"
     url: "https://localhost:8080/v1/authentication/signin"
+  - name: "update"
+    url: "https://localhost:8080/v1/authentication/update"

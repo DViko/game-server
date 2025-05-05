@@ -57,3 +57,20 @@ func (db *DataBase) SigningIn(ctx context.Context, req *pd.AuthenticationRequest
 	}
 	return &uData
 }
+
+func (db *DataBase) Update(ctx context.Context, req *pd.AuthenticationRequest) *pd.AuthenticationResponse {
+
+	var uData pd.AuthenticationResponse
+
+	err := db.DBPool.QueryRow(
+		ctx,
+		"SELECT id, username FROM users WHERE email = $1 AND password_hash = $2",
+		req.Email, req.Password).Scan(
+		&uData.UserId,
+		&uData.Username,
+	)
+	if err != nil {
+		helpers.ErrorHelper(err, "Failed to sign in user:")
+	}
+	return &uData
+}

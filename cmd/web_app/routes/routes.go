@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"log"
 	"net/http"
 	"web_app/helpers"
 	"web_app/render"
@@ -26,6 +27,7 @@ func (rs *RoutesHandler) PreparingRoutes() {
 	http.HandleFunc("/", rs.HIndex)
 	http.HandleFunc("/signup", rs.HSignUp)
 	http.HandleFunc("/signin", rs.HSignIn)
+	http.HandleFunc("/update", rs.HUpdate)
 	http.HandleFunc("/run", rs.HRun)
 }
 
@@ -59,7 +61,11 @@ func (rs *RoutesHandler) HSignUp(w http.ResponseWriter, r *http.Request) {
 			"password": r.FormValue("password"),
 		}
 
-		resp, _ := http.Post(rs.Routes.GRoutes[0].URL, "application/json", helpers.JsonEncoder(payload))
+		resp, err := helpers.CallGatewayPOST(rs.Routes.GRoutes[0].URL, "", payload)
+
+		if err != nil {
+			log.Println("Error call to gateway:", err)
+		}
 
 		helpers.SetCookie(helpers.JsonDecoder(resp), w)
 
@@ -78,7 +84,11 @@ func (rs *RoutesHandler) HSignIn(w http.ResponseWriter, r *http.Request) {
 			"password": r.FormValue("password"),
 		}
 
-		resp, _ := http.Post(rs.Routes.GRoutes[1].URL, "application/json", helpers.JsonEncoder(payload))
+		resp, err := helpers.CallGatewayPOST(rs.Routes.GRoutes[1].URL, "", payload)
+
+		if err != nil {
+			log.Println("Error call to gateway:", err)
+		}
 
 		helpers.SetCookie(helpers.JsonDecoder(resp), w)
 
@@ -86,6 +96,30 @@ func (rs *RoutesHandler) HSignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.TmplRender(w, "signin.html", map[string]string{"Title": "The Game | Sign In"})
+}
+
+func (rs *RoutesHandler) HUpdate(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodPost {
+
+		tokenCookie, _ := r.Cookie("token")
+
+		payload := map[string]string{
+			"email":    r.FormValue("email"),
+			"password": r.FormValue("password"),
+		}
+
+		resp, err := helpers.CallGatewayPOST(rs.Routes.GRoutes[2].URL, tokenCookie.Value, payload)
+
+		if err != nil {
+			log.Println("Error call to gateway:", err)
+		}
+
+		helpers.SetCookie(helpers.JsonDecoder(resp), w)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
+
+	render.TmplRender(w, "update.html", map[string]string{"Title": "The Game | Update"})
 }
 
 func (rs *RoutesHandler) HRun(w http.ResponseWriter, r *http.Request) {

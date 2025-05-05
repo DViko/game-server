@@ -163,10 +163,11 @@ const file_authentication_proto_rawDesc = "" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05token\x18\x03 \x01(\tR\x05token\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\x05R\x05error2\x95\x02\n" +
+	"\x05error\x18\x04 \x01(\x05R\x05error2\x94\x03\n" +
 	"\x15AuthenticationService\x12}\n" +
 	"\x06SignUp\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/signup\x12}\n" +
-	"\x06SignIn\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/signinB\x16Z\x14./pkg;authenticationb\x06proto3"
+	"\x06SignIn\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/signin\x12}\n" +
+	"\x06Update\x12%.authentication.AuthenticationRequest\x1a&.authentication.AuthenticationResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/authentication/updateB\x16Z\x14./pkg;authenticationb\x06proto3"
 
 var (
 	file_authentication_proto_rawDescOnce sync.Once
@@ -188,10 +189,12 @@ var file_authentication_proto_goTypes = []any{
 var file_authentication_proto_depIdxs = []int32{
 	0, // 0: authentication.AuthenticationService.SignUp:input_type -> authentication.AuthenticationRequest
 	0, // 1: authentication.AuthenticationService.SignIn:input_type -> authentication.AuthenticationRequest
-	1, // 2: authentication.AuthenticationService.SignUp:output_type -> authentication.AuthenticationResponse
-	1, // 3: authentication.AuthenticationService.SignIn:output_type -> authentication.AuthenticationResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 2: authentication.AuthenticationService.Update:input_type -> authentication.AuthenticationRequest
+	1, // 3: authentication.AuthenticationService.SignUp:output_type -> authentication.AuthenticationResponse
+	1, // 4: authentication.AuthenticationService.SignIn:output_type -> authentication.AuthenticationResponse
+	1, // 5: authentication.AuthenticationService.Update:output_type -> authentication.AuthenticationResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

@@ -5,6 +5,7 @@ import (
 
 	"authentication/handler"
 	"authentication/helpers"
+	"authentication/jwt"
 	pd "authentication/pkg"
 	"context"
 
@@ -25,7 +26,7 @@ func main() {
 	authService := handler.NewAuthenticationService(db)
 
 	creds, _ := credentials.NewServerTLSFromFile(sCrt, sKey)
-	server := grpc.NewServer(grpc.Creds(creds))
+	server := grpc.NewServer(grpc.Creds(creds), grpc.UnaryInterceptor(jwt.AuthenticationInterceptor()))
 
 	pd.RegisterAuthenticationServiceServer(server, authService)
 	lis, err := net.Listen("tcp", "localhost:50051")

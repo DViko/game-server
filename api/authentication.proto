@@ -20,6 +20,13 @@ service AuthenticationService {
       body: "*"
     };
   }
+
+  rpc Update (AuthenticationRequest) returns (AuthenticationResponse) {
+    option (google.api.http) = {
+      post: "/v1/authentication/update"
+      body: "*"
+    };
+  }
 }
 
 message AuthenticationRequest {

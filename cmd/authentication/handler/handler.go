@@ -40,3 +40,14 @@ func (s *Authentication) SignIn(ctx context.Context, req *pd.AuthenticationReque
 		Error:    0,
 	}, nil
 }
+
+func (s *Authentication) Update(ctx context.Context, req *pd.AuthenticationRequest) (*pd.AuthenticationResponse, error) {
+	uData := s.DB.Update(ctx, req)
+
+	return &pd.AuthenticationResponse{
+		UserId:   uData.UserId,
+		Username: req.Username,
+		Token:    jwt.GenerateToken(uData.UserId, uData.Username),
+		Error:    0,
+	}, nil
+}
