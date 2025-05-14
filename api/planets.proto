@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package Planets;
+
+option go_package = "./pkg;planets";
+
+import "google/api/annotations.proto";
+
+service PlanetsService {
+
+  rpc AllPlanets (PlanetsRequest) returns (PlanetsResponse) {
+    option (google.api.http) = {
+      get: "/v1/planets"
+    };
+  }
+
+  rpc HomePlanet (PlanetsRequest) returns (PlanetsResponse) {
+    option (google.api.http) = {
+      get: "/v1/planets/home"
+    };
+  }
+
+  rpc Update (PlanetsRequest) returns (PlanetsResponse) {
+    option (google.api.http) = {
+      post: "/v1/planets/update"
+      body: "*"
+    };
+  }
+}
+
+
+message PlanetsRequest {
+  string id = 1;
+  string owner_id = 2;
+  string name = 3;
+}
+message PlanetsResponse {
+  //todo
+}

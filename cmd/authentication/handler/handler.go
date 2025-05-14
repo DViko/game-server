@@ -42,6 +42,7 @@ func (s *Authentication) SignIn(ctx context.Context, req *pd.AuthenticationReque
 }
 
 func (s *Authentication) Update(ctx context.Context, req *pd.AuthenticationRequest) (*pd.AuthenticationResponse, error) {
+
 	uData := s.DB.Update(ctx, req)
 
 	return &pd.AuthenticationResponse{

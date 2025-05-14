@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"log"
+	"net/http"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -21,21 +21,45 @@ func ValidateToken(tokenString string) *Claims {
 	})
 
 	if err != nil {
-		log.Println("Error parsing token:", err)
 		return nil
 	}
 
 	claims, ok := token.Claims.(*Claims)
 
 	if !ok || !token.Valid {
-		log.Println("Invalid token")
 		return nil
 	}
 
 	if claims.ExpiresAt.Time.Before(time.Now()) {
-		log.Println("Token expired")
 		return nil
 	}
 
 	return claims
+}
+
+func SetCookie(data RegisterUserResponse, w http.ResponseWriter) {
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    data.Token,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+		Expires:  time.Now().Add(time.Hour * 24),
+	})
+}
+
+func ResetCookie(w http.ResponseWriter, r *http.Request) {
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteStrictMode,
+	})
 }
