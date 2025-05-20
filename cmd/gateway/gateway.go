@@ -8,7 +8,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	pb "gateway/pkg"
+	authentication "gateway/pkg/authentication"
+	planets "gateway/pkg/planets"
 )
 
 const (
@@ -27,7 +28,8 @@ func main() {
 	mux := runtime.NewServeMux()
 	dialOpts := []grpc.DialOption{grpc.WithTransportCredentials(creds)}
 
-	pb.RegisterAuthenticationServiceHandlerFromEndpoint(ctx, mux, "localhost:50051", dialOpts)
+	authentication.RegisterAuthenticationServiceHandlerFromEndpoint(ctx, mux, "localhost:50051", dialOpts)
+	planets.RegisterPlanetsServiceHandlerFromEndpoint(ctx, mux, "localhost:50052", dialOpts)
 
 	http.ListenAndServeTLS("localhost:8080", sCrt, sKey, mux)
 }

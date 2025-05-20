@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package Planets;
+package planets;
 
 option go_package = "./pkg;planets";
 
@@ -30,10 +30,14 @@ service PlanetsService {
 
 
 message PlanetsRequest {
-  string id = 1;
-  string owner_id = 2;
-  string name = 3;
+  string Name = 3;
 }
+
 message PlanetsResponse {
-  //todo
+  string Id = 1;
+  string Name = 3;
+  string Type = 4;
+  int32 Size = 5;
+  int32 TempMin = 6;
+  int32 TempMax = 7;
 }
